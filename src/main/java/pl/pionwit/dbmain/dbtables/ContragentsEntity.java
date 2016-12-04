@@ -1,7 +1,8 @@
-package pl.pionwit.models;
+package pl.pionwit.dbmain.dbtables;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 
 /**
  * Created by vi_st on 27.10.2016.
@@ -9,19 +10,20 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "contragents", schema = "db_pionwit", catalog = "")
 public class ContragentsEntity {
-    private int id;
+    private Long id;
     private Timestamp registDate;
     private Timestamp changeDate;
     private String name;
     private String fullName;
+    private Collection<AddressesEntity> addressesById;
 
     @Id
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -83,11 +85,20 @@ public class ContragentsEntity {
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (registDate != null ? registDate.hashCode() : 0);
-        result = 31 * result + (changeDate != null ? changeDate.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = id.hashCode();
+        result = 31 * result + registDate.hashCode();
+        result = 31 * result + changeDate.hashCode();
+        result = 31 * result + name.hashCode();
         result = 31 * result + (fullName != null ? fullName.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "contragentsByContragentId")
+    public Collection<AddressesEntity> getAddressesById() {
+        return addressesById;
+    }
+
+    public void setAddressesById(Collection<AddressesEntity> addressesById) {
+        this.addressesById = addressesById;
     }
 }

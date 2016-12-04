@@ -4,8 +4,7 @@ package pl.pionwit.models.tables;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import pl.pionwit.dbmain.HibernateUtil;
-import pl.pionwit.models.AddressesEntity;
-import pl.pionwit.models.CountryEntity;
+import pl.pionwit.dbmain.dbtables.AddressesEntity;
 import pl.pionwit.models.interfaces.AddressImpl;
 
 import javax.persistence.PersistenceException;
@@ -45,11 +44,16 @@ public class AddressesTable implements AddressImpl {
         try {
             session.saveOrUpdate(address);
             session.flush();
-            this.addresses = session.createCriteria(AddressesEntity.class).list();
-        }catch (PersistenceException e){
-            System.out.println("Данные не уникальны.");
-        }finally {
+            this.addresses = session.createQuery("from AddressesEntity ").list();
             session.getTransaction().commit();
+        }
+        catch (PersistenceException ex) {
+            Throwable sq = ex.getCause();
+            sq=sq.getCause();
+            String s = sq.getMessage();
+            System.out.println(s);
+        }
+        finally {
             session.close();
         }
     }
@@ -66,7 +70,7 @@ public class AddressesTable implements AddressImpl {
     }
 
     // Возвращает запись по ID
-    public AddressesEntity search(int id) {
+    public AddressesEntity search(Long id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         AddressesEntity rez =new AddressesEntity();

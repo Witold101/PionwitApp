@@ -1,43 +1,31 @@
 package pl.pionwit;
 
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
-import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.internal.ExceptionConverterImpl;
-import org.hibernate.query.criteria.internal.expression.function.AggregationFunction;
-import pl.pionwit.dbmain.HibernateUtil;
-import pl.pionwit.models.CountryEntity;
-import pl.pionwit.models.tables.CountryTable;
 
-import javax.persistence.PersistenceException;
-import java.sql.SQLException;
+import pl.pionwit.dbmain.dbtables.AddressesEntity;
+import pl.pionwit.dbmain.dbtables.CountryEntity;
+import pl.pionwit.models.tables.AddressesTable;
+import pl.pionwit.models.tables.CountryTable;
 
 public class AppMain {
 
     public static void main(String[] args) {
 
         CountryEntity country = new CountryEntity();
-        country.setName("USA");
+        country.setName("BY");
         country.setNumber(375);
         country.setFlag(25);
         //country.setId(4);
 
         CountryTable countryTable = CountryTable.getInstance();
 
-        try {
             countryTable.addUpdate(country);
-        } catch (PersistenceException e){
-            System.out.println("Данные не уникальны!");
-        }
-
 
         System.out.print(countryTable.toString());
-        CountryEntity countryEntity = new CountryEntity();
-        countryEntity =countryTable.search(5);
+        CountryEntity countryEntity = countryTable.search(5L);
 
-
+        AddressesTable addressesTable = AddressesTable.getInstance();
+        AddressesEntity address = addressesTable.search(1L);
 
 //        System.out.println("id-"+countryEntity.getId()+" KOD-"+countryEntity.getNumber()
 //                +" Name-"+countryEntity.getName()

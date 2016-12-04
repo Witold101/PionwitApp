@@ -4,7 +4,7 @@ package pl.pionwit.models.tables;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import pl.pionwit.dbmain.HibernateUtil;
-import pl.pionwit.models.ContragentsEntity;
+import pl.pionwit.dbmain.dbtables.ContragentsEntity;
 import pl.pionwit.models.interfaces.ContragentImpl;
 
 import javax.persistence.PersistenceException;
@@ -44,11 +44,16 @@ public class ContragentsTable implements ContragentImpl {
         try {
             session.saveOrUpdate(contragent);
             session.flush();
-            this.contragents = session.createCriteria(ContragentsEntity.class).list();
-        }catch (PersistenceException e){
-            System.out.println("Данные не уникальны.");
-        }finally {
+            this.contragents = session.createQuery("from ContragentsEntity ").list();
             session.getTransaction().commit();
+        }
+        catch (PersistenceException ex) {
+            Throwable sq = ex.getCause();
+            sq=sq.getCause();
+            String s = sq.getMessage();
+            System.out.println(s);
+        }
+        finally {
             session.close();
         }
     }
@@ -65,7 +70,7 @@ public class ContragentsTable implements ContragentImpl {
     }
 
     // Возвращает запись по ID
-    public ContragentsEntity search(int id) {
+    public ContragentsEntity search(Long id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         ContragentsEntity rez = new ContragentsEntity();

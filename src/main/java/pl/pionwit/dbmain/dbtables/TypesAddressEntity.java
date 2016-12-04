@@ -1,21 +1,23 @@
-package pl.pionwit.models;
+package pl.pionwit.dbmain.dbtables;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 
 @Entity
 @Table(name = "types_address", schema = "db_pionwit", catalog = "")
 public class TypesAddressEntity {
-    private int id;
+    private Long id;
     private String name;
+    Collection<AddressesEntity> addressesById;
 
     @Id
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -44,8 +46,17 @@ public class TypesAddressEntity {
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
         return result;
+    }
+
+    @OneToMany(mappedBy = "typesAddressByTypeId")
+    public Collection<AddressesEntity> getAddressesById() {
+        return addressesById;
+    }
+
+    public void setAddressesById(Collection<AddressesEntity> addressesById) {
+        this.addressesById = addressesById;
     }
 }

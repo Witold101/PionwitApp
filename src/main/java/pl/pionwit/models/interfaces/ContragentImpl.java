@@ -1,11 +1,11 @@
 package pl.pionwit.models.interfaces;
 
 
-import pl.pionwit.models.ContragentsEntity;
+import pl.pionwit.dbmain.dbtables.ContragentsEntity;
 
 public interface ContragentImpl {
     void addUpdate(ContragentsEntity contragent);
     void dell (ContragentsEntity contragent);
-    ContragentsEntity search (int id);
+    ContragentsEntity search (Long id);
     boolean isSet (ContragentsEntity contragent);
 }

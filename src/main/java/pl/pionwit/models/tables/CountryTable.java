@@ -4,16 +4,16 @@ package pl.pionwit.models.tables;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import pl.pionwit.dbmain.HibernateUtil;
-import pl.pionwit.models.CountryEntity;
+import pl.pionwit.dbmain.dbtables.CountryEntity;
 import pl.pionwit.models.interfaces.CountryImpl;
 
+import javax.jws.WebService;
 import javax.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 //Класс для работы с таблицей Country (Singleton)
-public class CountryTable implements CountryImpl{
+public class CountryTable implements CountryImpl {
 
     private List<CountryEntity> countrys;
 
@@ -26,7 +26,7 @@ public class CountryTable implements CountryImpl{
 
     private CountryTable() {
         countrys = null;
-        countrys=new ArrayList<CountryEntity>();
+        countrys = new ArrayList<CountryEntity>();
         setCountryTable();
     }
 
@@ -34,7 +34,7 @@ public class CountryTable implements CountryImpl{
     private void setCountryTable() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        this.countrys = session.createCriteria(CountryEntity.class).list();
+        this.countrys = session.createQuery("from CountryEntity ").list();
         session.getTransaction().commit();
         session.close();
     }
@@ -46,11 +46,14 @@ public class CountryTable implements CountryImpl{
         try {
             session.saveOrUpdate(country);
             session.flush();
-            this.countrys = session.createCriteria(CountryEntity.class).list();
-        }catch (PersistenceException e){
-            System.out.println("Данные не уникальны.");
-        }finally {
+            this.countrys = session.createQuery("from CountryEntity").list();
             session.getTransaction().commit();
+        } catch (PersistenceException ex) {
+            Throwable sq = ex.getCause();
+            sq = sq.getCause();
+            String s = sq.getMessage();
+            System.out.println(s);
+        } finally {
             session.close();
         }
     }
@@ -67,17 +70,17 @@ public class CountryTable implements CountryImpl{
     }
 
     // Возвращает запись по ID
-    public CountryEntity search(int id) {
+    public CountryEntity search(Long id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         CountryEntity country = new CountryEntity();
         try {
             Query query = session.createQuery("from CountryEntity where id=:paramName");
-            query.setParameter("paramName",id);
+            query.setParameter("paramName", id);
             country = (CountryEntity) query.list().get(0);
-        }catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException e) {
             System.out.println("Нет такой записи.");
-        }finally {
+        } finally {
             session.getTransaction().commit();
             session.close();
         }
@@ -89,24 +92,29 @@ public class CountryTable implements CountryImpl{
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query query = session.createQuery("from CountryEntity where id=:paramName");
-        query.setParameter("paramName",country.getId());
-        if (query.list().size()>0){
+        query.setParameter("paramName", country.getId());
+        if (query.list().size() > 0) {
             session.getTransaction().commit();
             session.close();
             return true;
-        }else {
+        } else {
             session.getTransaction().commit();
             session.close();
             return false;
         }
     }
 
+    //Возвращает все страны
+    public List<CountryEntity> getCountrys() {
+        return countrys;
+    }
+
     //Возвращает поле countrys
-    public String toString(){
+    public String toString() {
         String s = "";
-        for (CountryEntity country : countrys)  {
-            s = s+ (" id-"+country.getId()+" KOD-"+country.getNumber()+" Name-"+country.getName()
-            +" Flag-"+country.getFlag());
+        for (CountryEntity country : countrys) {
+            s = s + (" id-" + country.getId() + " KOD-" + country.getNumber() + " Name-" + country.getName()
+                    + " Flag-" + country.getFlag());
         }
         return s;
     }

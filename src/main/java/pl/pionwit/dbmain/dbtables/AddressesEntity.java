@@ -1,27 +1,29 @@
-package pl.pionwit.models;
+package pl.pionwit.dbmain.dbtables;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "addresses", schema = "db_pionwit", catalog = "")
 public class AddressesEntity {
-    private int id;
+    private Long id;
     private String street1;
     private String street2;
     private String city;
     private String postCode;
-    private int countryId;
-    private int contragentId;
-    private int typeId;
+    private Long countryId;
+    private Long contragentId;
+    private Long typeId;
     private CountryEntity countryByCountryId;
+    private TypesAddressEntity typesAddressByTypeId;
+    private ContragentsEntity contragentsByContragentId;
 
     @Id
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -67,31 +69,31 @@ public class AddressesEntity {
 
     @Basic
     @Column(name = "country_id", nullable = false, insertable = false, updatable = false)
-    public int getCountryId() {
+    public Long getCountryId() {
         return countryId;
     }
 
-    public void setCountryId(int countryId) {
+    public void setCountryId(Long countryId) {
         this.countryId = countryId;
     }
 
     @Basic
-    @Column(name = "contragent_id", nullable = false)
-    public int getContragentId() {
+    @Column(name = "contragent_id", nullable = false, insertable = false, updatable = false)
+    public Long getContragentId() {
         return contragentId;
     }
 
-    public void setContragentId(int contragentId) {
+    public void setContragentId(Long contragentId) {
         this.contragentId = contragentId;
     }
 
     @Basic
-    @Column(name = "type_id", nullable = false)
-    public int getTypeId() {
+    @Column(name = "type_id", nullable = false, insertable = false, updatable = false)
+    public Long getTypeId() {
         return typeId;
     }
 
-    public void setTypeId(int typeId) {
+    public void setTypeId(Long typeId) {
         this.typeId = typeId;
     }
 
@@ -116,14 +118,14 @@ public class AddressesEntity {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id.hashCode();
         result = 31 * result + (street1 != null ? street1.hashCode() : 0);
         result = 31 * result + (street2 != null ? street2.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (postCode != null ? postCode.hashCode() : 0);
-        result = 31 * result + countryId;
-        result = 31 * result + contragentId;
-        result = 31 * result + typeId;
+        result = 31 * result + countryId.hashCode();
+        result = 31 * result + contragentId.hashCode();
+        result = 31 * result + typeId.hashCode();
         return result;
     }
 
@@ -135,5 +137,25 @@ public class AddressesEntity {
 
     public void setCountryByCountryId(CountryEntity countryByCountryId) {
         this.countryByCountryId = countryByCountryId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "type_id", referencedColumnName = "id", nullable = false)
+    public TypesAddressEntity getTypesAddressByTypeId() {
+        return typesAddressByTypeId;
+    }
+
+    public void setTypesAddressByTypeId(TypesAddressEntity typesAddressEntity) {
+        this.typesAddressByTypeId = typesAddressEntity;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "contragent_id", referencedColumnName = "id", nullable = false)
+    public ContragentsEntity getContragentsByContragentId() {
+        return contragentsByContragentId;
+    }
+
+    public void setContragentsByContragentId(ContragentsEntity contragentsByContragentId) {
+        this.contragentsByContragentId = contragentsByContragentId;
     }
 }

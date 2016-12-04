@@ -4,7 +4,7 @@ package pl.pionwit.models.tables;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import pl.pionwit.dbmain.HibernateUtil;
-import pl.pionwit.models.TypesAddressEntity;
+import pl.pionwit.dbmain.dbtables.TypesAddressEntity;
 import pl.pionwit.models.interfaces.TypesAddressImpl;
 
 import javax.persistence.PersistenceException;
@@ -44,11 +44,16 @@ public class TypeAddressTable implements TypesAddressImpl {
         try {
             session.saveOrUpdate(typeAddress);
             session.flush();
-            this.typeAddresses = session.createCriteria(TypesAddressEntity.class).list();
-        }catch (PersistenceException e){
-            System.out.println("Данные не уникальны.");
-        }finally {
+            this.typeAddresses = session.createQuery("from TypesAddressEntity").list();
             session.getTransaction().commit();
+        }
+        catch (PersistenceException ex) {
+            Throwable sq = ex.getCause();
+            sq=sq.getCause();
+            String s = sq.getMessage();
+            System.out.println(s);
+        }
+        finally {
             session.close();
         }
     }
@@ -65,7 +70,7 @@ public class TypeAddressTable implements TypesAddressImpl {
     }
 
     // Возвращает запись по ID
-    public TypesAddressEntity search(int id) {
+    public TypesAddressEntity search(Long id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         TypesAddressEntity rez = new TypesAddressEntity();

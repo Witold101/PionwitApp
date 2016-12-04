@@ -1,4 +1,4 @@
-package pl.pionwit.models;
+package pl.pionwit.dbmain.dbtables;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -7,7 +7,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "country", schema = "db_pionwit", catalog = "")
 public class CountryEntity {
-    private int id;
+    private long id;
     private int number;
     private String name;
     private Integer flag;
@@ -15,11 +15,11 @@ public class CountryEntity {
 
     @Id
     @Column(name = "id", nullable = false)
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
