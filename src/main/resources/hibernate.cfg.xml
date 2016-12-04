@@ -6,8 +6,8 @@
     <session-factory>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/db_pionwit</property>
-        <property name="connection.username">root</property>
+        <property name="hibernate.connection.url">jdbc:mysql://192.168.1.100:3306/db_pionwit</property>
+        <property name="connection.username">witold101</property>
         <property name="connection.password">wertywerty101</property>
 
         <property name="connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
