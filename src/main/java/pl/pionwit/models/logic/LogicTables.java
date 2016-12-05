@@ -5,6 +5,7 @@ import pl.pionwit.dbmain.dbtables.CountryEntity;
 import pl.pionwit.models.interfaces.ServiceTablesImpl;
 import pl.pionwit.models.tables.CountryTable;
 
+import javax.jws.WebMethod;
 import javax.jws.WebService;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,25 +14,29 @@ import java.util.List;
 public class LogicTables implements ServiceTablesImpl{
 
     public LogicTables() {
-
     }
 
-    public void addUpdate(CountryEntity country) {
+    @WebMethod
+    public void addUpdateCountry(CountryEntity country) {
         CountryTable.getInstance().addUpdate(country);
     }
 
-    public void dell(CountryEntity country) {
+    @WebMethod
+    public void dellCountry(CountryEntity country) {
         CountryTable.getInstance().dell(country);
     }
 
-    public CountryEntity search(Long id) {
+    @WebMethod
+    public CountryEntity searchCountry(Long id) {
         return CountryTable.getInstance().search(id);
     }
 
-    public boolean isSet(CountryEntity country) {
+    @WebMethod
+    public boolean isSetCountry(CountryEntity country) {
         return CountryTable.getInstance().isSet(country);
     }
 
+    @WebMethod
     public List<CountryEntity> getCountrys() {
         return CountryTable.getInstance().getCountrys();
     }

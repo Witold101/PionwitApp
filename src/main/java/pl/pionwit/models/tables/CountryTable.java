@@ -13,7 +13,7 @@ import java.util.List;
 //Класс для работы с таблицей Country (Singleton)
 public class CountryTable {
 
-    private List<CountryEntity> countrys;
+    private List <CountryEntity> countrys;
 
     private static CountryTable ourInstance = new CountryTable();
 
@@ -62,7 +62,7 @@ public class CountryTable {
         session.beginTransaction();
         session.delete(country);
         session.flush();
-        this.countrys = session.createCriteria(CountryEntity.class).list();
+        this.countrys = session.createQuery("from CountryEntity").list();
         session.getTransaction().commit();
         session.close();
     }

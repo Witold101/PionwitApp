@@ -4,6 +4,7 @@ import pl.pionwit.dbmain.dbtables.CountryEntity;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebService(serviceName = "PionwitService")
@@ -11,15 +12,15 @@ public interface ServiceTablesImpl {
 
 // Country table
     @WebMethod
-    void addUpdate(CountryEntity country);
+    void addUpdateCountry(CountryEntity country);
     @WebMethod
-    void dell (CountryEntity country);
+    void dellCountry (CountryEntity country);
     @WebMethod
-    CountryEntity search (Long id);
+    CountryEntity searchCountry (Long id);
     @WebMethod
-    boolean isSet (CountryEntity country);
+    boolean isSetCountry (CountryEntity country);
     @WebMethod
-    List getCountrys();
+    List<CountryEntity> getCountrys();
 //--------------------------------------------//
 
 }
