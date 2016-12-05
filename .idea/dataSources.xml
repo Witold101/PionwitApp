@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="MySQL - db_pionwit@localhost" uuid="b71640a7-b95c-4a1b-9b21-e04b82f7a89b">
+    <data-source source="LOCAL" name="MySQL - db_pionwit@192.168.1.100" uuid="b71640a7-b95c-4a1b-9b21-e04b82f7a89b">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>

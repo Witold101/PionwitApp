@@ -5,15 +5,13 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import pl.pionwit.dbmain.HibernateUtil;
 import pl.pionwit.dbmain.dbtables.CountryEntity;
-import pl.pionwit.models.interfaces.CountryImpl;
 
-import javax.jws.WebService;
 import javax.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.List;
 
 //Класс для работы с таблицей Country (Singleton)
-public class CountryTable implements CountryImpl {
+public class CountryTable {
 
     private List<CountryEntity> countrys;
 
