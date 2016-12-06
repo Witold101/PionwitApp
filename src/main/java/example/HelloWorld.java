@@ -17,7 +17,14 @@ public class HelloWorld {
 //    return result;
 //  }
   public static void main(String[] argv) {
+    LogicTables logicTables = new LogicTables();
+
+    System.out.print("NAME - "+logicTables.searchCountry(18L).getName());
+    logicTables = null;
+
     Object implementor = new LogicTables();
+
+
     String address = "http://localhost:9000/PionwitService";
     Endpoint.publish(address, implementor);
   }

@@ -9,7 +9,6 @@
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower" />
       <user-name>witold101</user-name>
       <user-password>dfdddfcfdfd8dfdedfd3dfdddfcfdfd8dfdedfd3df9bdf9adf9b</user-password>
-      <resolve-scope>db_pionwit:</resolve-scope>
     </data-source>
   </component>
 </project>
